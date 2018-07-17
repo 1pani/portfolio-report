@@ -199,22 +199,22 @@ credit_graph.append((d_copy['CreditQualAAA'].sum())*100/(d_copy['Amount']).sum()
 colors = ['lightcoral' , 'mediumslateblue' , 'seagreen']
 
 plt.pie(credit_graph , labels=['A' , 'AA' , 'AAA'] , autopct='%.2f' , colors = colors)
-plt.title('Credit Exposure')
+plt.title('Credit Exposure', fontsize=20)
 plt.savefig('credit.png')
 plt.show()
 
 plt.pie(asset_graph , labels=['BondNet' , 'CashNet' , 'EquityNet'] , autopct='%.2f', colors = colors)
-plt.title('Asset Allocation')
+plt.title('Asset Allocation', fontsize=20)
 plt.savefig('asset.png')
 plt.show()
 
 plt.pie(equity_graph , labels=['BasicMat' , 'CommSer' , 'ConsCyc' , 'DefLong' , 'EnergyLong' , 'FinancialServ' , 'HealthCare' , 'Indus' , 'RealEs' , 'Tech' , 'Util'],  autopct='%.2f' , colors = colors)
-plt.title('Sectoral')
+plt.title('Sectoral', fontsize=20)
 plt.savefig('sectoral.png')
 plt.show()
 
 plt.pie(mcap_graph , labels=['Mid' , 'Large' , 'Small'] , autopct='%.2f' , colors = colors)
-plt.title('Marketcap')
+plt.title('Marketcap', fontsize=20)
 plt.savefig('marketcap.png')
 plt.show()
 
@@ -437,8 +437,9 @@ worksheet.write('D25' , 'Modified' , cell_format )
 worksheet.write('E25' , modified)
 worksheet.write('G24' , 'YTM' , cell_format )
 worksheet.write('H24' , ytm)
+worksheet.write('P32' , 'Current date is' + str(prev) , cell_format)
 top10.to_excel(writer , sheet_name = 'Sheet1' , startrow = len(d)+20+len(d)+5 , startcol = 0)
-
+xirr.to_excel(writer , sheet_name = 'Sheet1' , startrow=31 , startcol=5)
 #for i in range(0,len(d)+5 , 2):
     
 #    worksheet.set_row(i, cell_format=color_format1)
