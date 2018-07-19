@@ -1,0 +1,10 @@
+For report-portfolio folder
+
+1.Click on report_portfolio.py file.
+2.Add cust_trans.xlsx file path present in the same folder when it asks for enter the cust-trans path.
+3.Add the primary dataset methodology dataset file path present in the same folder when it asks to enter the path.
+4.Enter the latest updated NAV date in the same format as mentioned.
+5.Wait for some time till the graphs get displayed.
+6.Close every graphs.
+7.Press enter to close the program.
+8.Open dupli.xlsx file to see the report.

@@ -397,7 +397,7 @@ for i in cust_trans['Fund Name'].unique():
       
 xirr = xirr.drop(['index' , 'Goal Name' , 'Folio' , 'BSE Order No' , 'Status'] , axis=1)
 xirr = xirr.drop(['Pur Type' , 'Order Type' , 'SIP Date'] , axis=1)
-xirr = xirr.drop(['AMFI' , 'Today NAV'])
+#xirr = xirr.drop(['AMFI' , 'Today NAV'])
 xirr['Amount']*=-1
 #print(xirr)
 
@@ -411,9 +411,14 @@ cell_format = workbook.add_format()
 cell_format.set_font_color('red')
 bold = workbook.add_format()
 cell_format.set_bold()
-
+bold.set_bold()
+fmt = workbook.add_format()
+fmt.set_bg_color('white')
 #color_format1 = workbook.add_format({'bg_color' : '#FFC7CE'})
 #color_format2 = workbook.add_format({'bg_color' : '#00C7CE'})
+
+for i in range(0,300):
+    worksheet.set_row(i,None,fmt)
 
 cust_final.to_excel(writer , sheet_name = 'Sheet1' , startrow = 0 , startcol = 0)
 
@@ -437,9 +442,13 @@ worksheet.write('D25' , 'Modified' , cell_format )
 worksheet.write('E25' , modified)
 worksheet.write('G24' , 'YTM' , cell_format )
 worksheet.write('H24' , ytm)
-worksheet.write('P32' , 'Current date is' + str(prev) , cell_format)
+worksheet.write('P32' , 'Current date is' + str(prev) , bold)
 top10.to_excel(writer , sheet_name = 'Sheet1' , startrow = len(d)+20+len(d)+5 , startcol = 0)
-xirr.to_excel(writer , sheet_name = 'Sheet1' , startrow=31 , startcol=5)
+#xirr.to_excel(writer , sheet_name = 'Sheet1' , startrow=31 , startcol=5)
+
+for i in range(0,len(xirr['Fund Name'].unique())):
+    
+    xirr[xirr['Fund Name']==xirr['Fund Name'].unique()[i]][['Date' , 'Fund Name' , 'Amount']].to_excel(writer , sheet_name = 'Sheet1' , startrow=32 , startcol=5+(5*i))
 #for i in range(0,len(d)+5 , 2):
     
 #    worksheet.set_row(i, cell_format=color_format1)
