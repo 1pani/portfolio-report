@@ -201,21 +201,25 @@ colors = ['lightcoral' , 'mediumslateblue' , 'seagreen']
 plt.pie(credit_graph , labels=['A' , 'AA' , 'AAA'] , autopct='%.2f' , colors = colors)
 plt.title('Credit Exposure', fontsize=20)
 plt.savefig('credit.png')
+plt.axis('equal')
 plt.show()
 
 plt.pie(asset_graph , labels=['BondNet' , 'CashNet' , 'EquityNet'] , autopct='%.2f', colors = colors)
 plt.title('Asset Allocation', fontsize=20)
 plt.savefig('asset.png')
+plt.axis('equal')
 plt.show()
 
 plt.pie(equity_graph , labels=['BasicMat' , 'CommSer' , 'ConsCyc' , 'DefLong' , 'EnergyLong' , 'FinancialServ' , 'HealthCare' , 'Indus' , 'RealEs' , 'Tech' , 'Util'],  autopct='%.2f' , colors = colors)
 plt.title('Sectoral', fontsize=20)
 plt.savefig('sectoral.png')
+plt.axis('equal')
 plt.show()
 
 plt.pie(mcap_graph , labels=['Mid' , 'Large' , 'Small'] , autopct='%.2f' , colors = colors)
 plt.title('Marketcap', fontsize=20)
 plt.savefig('marketcap.png')
+plt.axis('equal')
 plt.show()
 
 #primary[['ISIN' , 'LegalName' , 'SortinoRatio3Yr' ,'SortinoRatio3Yr' , 'SharpeRatio3Yr' , 'TreynorRatio3Yr'  , 'ModifiedDurationLong' , 'YieldToMaturity']]
@@ -304,7 +308,9 @@ top10 = top10.rename(columns={0:'Weight%' , 1:'Holding'})
 #top10
 top10 = top10.groupby('Holding').sum()
 top10 = top10.nlargest(10 , 'Weight%')
-print(top10)
+top10 = top10.round({'Weight%':1})
+
+#print(top10)
 
 #print(cust_trans)
 
@@ -377,8 +383,8 @@ cust_final = cust_final.drop(['Goal Name' , 'Folio' , 'BSE Order No' , 'Status' 
 cust_final = cust_final.rename(columns={'Amount':'Purchase Value(INR.)' , 'Purchase NAV':'Purchase NAV(INR.)' , 'Today NAV':'Today NAV(INR.)' , 'Current Value':'Current Value(INR.)'})
 cust_final['Absolute Returns(%)'] = ((cust_final['Current Value(INR.)']-cust_final['Purchase Value(INR.)'])*100)/cust_final['Purchase Value(INR.)']
 cust_final = cust_final.drop(['AMFI'] , axis=1)
-print(cust_final)
-
+#print(cust_final)
+cust_final = cust_final.round({'Purchase NAV(INR.)':2 , 'Today NAV(INR.)':2 , 'Current Value(INR.)':0 , 'Absolute Returns(%)':1})
 ###################calculation for risk metrics################################
 
 
@@ -387,6 +393,12 @@ sharpe = sum(risk_met['Amount']*risk_met['SharpeRatio3Yr'])/sum(risk_met['Amount
 treynor = sum(risk_met['Amount']*risk_met['TreynorRatio3Yr'])/sum(risk_met['Amount'])
 modified = sum(risk_met['Amount']*risk_met['ModifiedDurationLong'])/sum(risk_met['Amount'])
 ytm = sum(risk_met['Amount']*risk_met['YieldToMaturity'])/sum(risk_met['Amount'])
+
+ytm = ("%.2f"%(ytm))
+modified = ("%.2f"%(modified))
+treynor = ("%.2f"%(treynor))
+sharpe = ("%.2f"%(sharpe))
+sortino = ("%.2f"%(sortino))
 
 #sortino , sharpe , treynor , modified , ytm
 #also do for stddev , avgmaturity , beta
